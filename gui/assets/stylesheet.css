@@ -93,18 +93,16 @@ body{
 /* ---- Navigation */
 .navigation-pane{
     position: absolute;
-    top: 15vh;
+    top: 20vh;
     left: 0;
-    padding-top: 5vh;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     justify-content: flex-start;
-    align-items: top;
-    height: calc(100vh - 10vh - 5vh);
+    align-items: stretch;
     width: 15vw;
     gap: 2.5vh;
     }
+
 
 .navigation-box{
     height: 6vh;
@@ -140,12 +138,13 @@ body{
 .navigation-box.filler3{
     background: url('icons/dashboard-icon-cash.png') no-repeat;
     background-position: 2.5vw;
-    background-size: auto 3vh !important;
+    background-size: 3vh 3vh !important;
+    border-bottom: none !important;
     }
 
 .navigation-box:hover{
     box-shadow: 0 0.5vh 0.5vw rgba(58, 66, 75, .8);
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px 0px 0px 30px;
     }
 
 .tab--selected{
@@ -174,6 +173,10 @@ body{
     background-size: auto 3vh !important;
     }
 
+
+div.tab-container--vert div.jsx-2309230230.tab {
+    border-bottom: none !important;
+    }
 
 
 .main-page{
@@ -750,3 +753,72 @@ body{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------ ACCOUNTS ------------------------------------------------------------ */
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
+
+.main-page.accounts{
+    position: absolute;
+    width: 83vw;
+    height: 90vh;
+    top: 5vh;
+    left: 17vw;
+    padding-top: 5vh;
+    padding-left: 0vw;
+    }
+
+
+.accounts-tabs{
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 5vh;
+    gap: 0vw;
+}
+
+
+.accounts-box{
+    height: 100%;
+    width: 13vw !important;
+    transition: all 0.3s ease-in-out;
+    font-family: 'Helvetica';
+    font-size: 1.1vw;
+    color: rgba(58, 66, 75, .85);
+    letter-spacing: 0.09vw;
+    font-weight: 550;
+    background-color: transparent !important;
+    border: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
+    }

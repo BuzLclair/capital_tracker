@@ -36,12 +36,10 @@ app.layout = html.Div(className='dashboard', children=[
     html.Div(className='navigation-pane-container', children=[
         html.Div(className='title-block', children=[
             html.Img(className='logo-capital-tracker', src='assets/logo-capital-tracker.png')
-            # html.Img(className='title-logo', src='assets/dashboard-logo-reverse-pyramid.png'),
-            # html.Div(className='title-text', children=['Capital Tracker'])
             ]),
 
 
-        dcc.Tabs(id='navigation-pane-value', value='overview', vertical=True, style=None, className='navigation-pane', children=[
+        dcc.Tabs(id='navigation-pane-value', value='accounts', vertical=True, style=None, className='navigation-pane', children=[
 
 
 
@@ -105,7 +103,19 @@ app.layout = html.Div(className='dashboard', children=[
 
 
             dcc.Tab(label='Accounts', value='accounts', className='navigation-box accounts', selected_className='tab--selected accounts-selected', children=[
+
+                html.Div(className='main-page accounts', children=[
+                    dcc.Tabs(id='accounts-tabs-value', value='financial_snapshot', vertical=False, style=None, className='accounts-tabs', children=[
+
+                        dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box snapshot', selected_className='tab--selected snapshot-selected', children=[]),
+                        dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='tab--selected transactions-selected', children=[]),
+                        dcc.Tab(label='Balance sheet', value='balance_sheet', className='accounts-box balancesheet', selected_className='tab--selected balancesheet-selected', children=[]),
+
+
+                        ]),
+                    ]),
                 ]),
+
 
 
             dcc.Tab(label='Filler2', value='filler2', className='navigation-box filler2', selected_className='tab--selected filler2-selected', children=[
