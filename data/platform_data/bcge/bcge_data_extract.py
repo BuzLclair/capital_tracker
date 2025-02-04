@@ -108,6 +108,21 @@ def cleaning_data(df):
 
 
 
+def clean_cash_flows(df):
+    ''' Clean the text to get the proper french accents (equivalent to UTF-8 decode result) '''
+
+    replacements = [("Ã©", "é"),("Ã¨", "è"),("Ã ", "à"),("Ã§", "ç"),("Ãª", "ê"),("Ã¯", "ï"),("Ã´", "ô"),("Ã¼", "ü"),("Ãœ", "Ü"),("Ã†", "Æ"),("Ã“", "Ó"),("Ã", "à"),("Œ", "œ"),("Â", ""),("\n","")]
+    for old, new in replacements:
+        df['description'] = df['description'].str.replace(old, new, regex=False)
+    # df['description'] = df['description'].str.replace('Numéro de carte: 535445******4464', '', regex=False)
+    # df['description'] = df['description'].str.replace('N° cartexxxxxxxxxxxx4464 - ', '', regex=False)
+    # df['description'] = df['description'].str.replace('N° carte xxxxxxxxxxxx4464 - ', '', regex=False)
+    # df['description'] = df['description'].str.replace('N° carte   xxxxxxxxxxxx4464 - ', '', regex=False)
+    return df
+
+
+
+
 def cash_flow_prep(df):
     ''' Extract the cash flows positions from cleaned account statements and returns a cleaned df.
 
@@ -135,7 +150,12 @@ def cash_flow_prep(df):
     cash_flows.loc[(cash_flows['amount'] < 0) & (~cash_flows['description'].str.contains('Achat')), 'type'] = 'Withdrawal'
     cash_flows = cash_flows.loc[:, ('date', 'type', 'amount', 'platform', 'currency', 'description')]
     cash_flows['asset_class'] = 'Cash'
+    cash_flows = clean_cash_flows(cash_flows)
     return cash_flows
+
+
+
+
 
 
 
@@ -150,3 +170,4 @@ def main():
     return dfs_list
 
 
+z = main()

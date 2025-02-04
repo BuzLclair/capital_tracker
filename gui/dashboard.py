@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 from dash.dependencies import Input, Output
 from Longterm_investment.gui.dashboard_utils import category_element_layout, category_element_layout2
-from Longterm_investment.services.data_bridge import DataPackage, global_balance_chart, PlatformSplitChart, asset_balance_chart
+from Longterm_investment.services.tabs_connection.overview_connection import DataPackage, global_balance_chart, PlatformSplitChart, asset_balance_chart
 
 
 
@@ -105,11 +105,11 @@ app.layout = html.Div(className='dashboard', children=[
             dcc.Tab(label='Accounts', value='accounts', className='navigation-box accounts', selected_className='tab--selected accounts-selected', children=[
 
                 html.Div(className='main-page accounts', children=[
-                    dcc.Tabs(id='accounts-tabs-value', value='financial_snapshot', vertical=False, style=None, className='accounts-tabs', children=[
+                    dcc.Tabs(id='accounts-tabs-value', value='transactions', vertical=False, style=None, className='accounts-tabs', children=[
 
-                        dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box snapshot', selected_className='tab--selected snapshot-selected', children=[]),
-                        dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='tab--selected transactions-selected', children=[]),
-                        dcc.Tab(label='Balance sheet', value='balance_sheet', className='accounts-box balancesheet', selected_className='tab--selected balancesheet-selected', children=[]),
+                        dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box snapshot', selected_className='accounts-box--selected snapshot-selected', children=[]),
+                        dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='accounts-box--selected transactions-selected', children=[]),
+                        dcc.Tab(label='Balance sheet', value='balance_sheet', className='accounts-box balancesheet', selected_className='accounts-box--selected balancesheet-selected', children=[]),
 
 
                         ]),

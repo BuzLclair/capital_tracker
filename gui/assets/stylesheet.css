@@ -801,24 +801,49 @@ div.tab-container--vert div.jsx-2309230230.tab {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 5vh;
-    gap: 0vw;
+    height: 4.8vh;
+    gap: 1.5vw;
 }
 
 
 .accounts-box{
+    position: relative;
     height: 100%;
-    width: 13vw !important;
+    width: 11vw !important;
     transition: all 0.3s ease-in-out;
     font-family: 'Helvetica';
-    font-size: 1.1vw;
-    color: rgba(58, 66, 75, .85);
+    font-size: 1vw;
+    color: rgba(58, 66, 75, .55);
     letter-spacing: 0.09vw;
-    font-weight: 550;
+    font-weight: 400;
     background-color: transparent !important;
     border: none !important;
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     padding: 0 !important;
+    padding-top: .25vh !important;
     }
+
+.accounts-box:hover{
+    box-shadow: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    }
+
+.accounts-box--selected{
+    box-shadow: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    color: rgba(0, 0, 0, 1) !important;
+    }
+.accounts-box--selected::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    width: 50%;
+    height: 3.5px;
+    background-color: rgba(34, 65, 125, 1) !important;
+    border-radius: 50rem;
+    }
+

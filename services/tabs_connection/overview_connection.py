@@ -9,6 +9,7 @@ from Longterm_investment.services.portfolio_service import PortfolioService
 
 
 
+
 class DataPackage:
 
     def __init__(self, simul):
@@ -29,7 +30,6 @@ class DataPackage:
             self.balance_platform *= random_nb
             self.balance_aggreg *= random_nb
             self.balance_asset_class *= random_nb
-
 
 
     def aggregated_packaging(self):
