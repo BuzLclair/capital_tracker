@@ -12,8 +12,13 @@ class DataPackage:
 
 
     def cleaned_data(self):
-        data = self.data[['date', 'type', 'amount', 'platform', 'currency', 'description']].copy()
-        data['date'] = pd.to_datetime(data['date']).dt.strftime('%Y-%m-%d')
+        data = self.data[['platform', 'type', 'date', 'currency', 'amount', 'description']].copy()
+        data = data.sort_values(by='date', ascending=False)
+        data['date'] = pd.to_datetime(data['date']).dt.strftime('%d.%m.%y')
+        data['amount'] = data['amount'].round(2)
+        data.columns = data.columns.str.capitalize()
+        data['Type'] = data['Type'].str.capitalize()
+        data['Description'] = data['Description'].str.capitalize()
         return data
 
 

@@ -4,8 +4,9 @@ import dash_bootstrap_components as dbc
 from dash import html, dcc
 from dash.dependencies import Input, Output
 from Longterm_investment.gui.dashboard_utils import category_element_layout, category_element_layout2
-from Longterm_investment.services.tabs_connection.overview_connection import DataPackage, global_balance_chart, PlatformSplitChart, asset_balance_chart
 
+from Longterm_investment.services.tabs_connection.overview_connection import DataPackage, global_balance_chart, PlatformSplitChart, asset_balance_chart
+from Longterm_investment.services.tabs_connection import accounts_connection
 
 
 
@@ -13,6 +14,8 @@ app = dash.Dash(__name__)
 app.title = 'Capital Tracker'
 
 
+
+# Overview
 data_package_object = DataPackage(simul=True)
 aggregated_data_package = data_package_object.aggregated_package
 currency_data_package = data_package_object.currency_packaging()
@@ -22,6 +25,11 @@ asset_data_package = data_package_object.asset_class_packaging()
 global_balance_fig = global_balance_chart(aggregated_data_package['consolidated_balance'])
 platform_split_fig_object = PlatformSplitChart(platform_data_package)
 asset_balance_fig = asset_balance_chart(asset_data_package['historical_amount_pct'], asset_data_package['value_names'], asset_data_package['asset_colors'])
+
+
+# Accounts
+accounts_object = accounts_connection.DataPackage()
+transactions_data = accounts_object.cleaned_data()
 
 
 
@@ -101,20 +109,36 @@ app.layout = html.Div(className='dashboard', children=[
 
 
 
-
             dcc.Tab(label='Accounts', value='accounts', className='navigation-box accounts', selected_className='tab--selected accounts-selected', children=[
 
                 html.Div(className='main-page accounts', children=[
                     dcc.Tabs(id='accounts-tabs-value', value='transactions', vertical=False, style=None, className='accounts-tabs', children=[
 
                         dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box snapshot', selected_className='accounts-box--selected snapshot-selected', children=[]),
-                        dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='accounts-box--selected transactions-selected', children=[]),
+
+                        dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='accounts-box--selected transactions-selected', children=[
+                            html.Div(className='main-page accounts transactions', children=[
+
+                                html.Div(className='accounts_transactions_filters', children=
+                                    [dcc.Dropdown(id=f'accounts_transactions_filters_{column_name}', options=list(transactions_data[column_name].unique()), placeholder=f'Select {column_name}', multi=True, disabled=False)
+                                     for column_name in transactions_data.columns]
+                                    ),
+
+                                html.Div(className='accounts_transactions_table', children=dbc.Table.from_dataframe(transactions_data, striped=True, bordered=True, hover=True)),
+
+                                ]),
+                            ]),
+
                         dcc.Tab(label='Balance sheet', value='balance_sheet', className='accounts-box balancesheet', selected_className='accounts-box--selected balancesheet-selected', children=[]),
 
 
                         ]),
                     ]),
                 ]),
+
+
+
+
 
 
 
