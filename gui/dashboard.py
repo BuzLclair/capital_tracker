@@ -1,7 +1,7 @@
 import dash
 import dash_bootstrap_components as dbc
 
-from dash import html, dcc
+from dash import html, dcc, dash_table
 from dash.dependencies import Input, Output
 from Longterm_investment.gui.dashboard_utils import category_element_layout, category_element_layout2
 
@@ -47,7 +47,7 @@ app.layout = html.Div(className='dashboard', children=[
             ]),
 
 
-        dcc.Tabs(id='navigation-pane-value', value='accounts', vertical=True, style=None, className='navigation-pane', children=[
+        dcc.Tabs(id='navigation-pane-value', value='overview', vertical=True, style=None, className='navigation-pane', children=[
 
 
 
@@ -124,7 +124,10 @@ app.layout = html.Div(className='dashboard', children=[
                                      for column_name in transactions_data.columns]
                                     ),
 
-                                html.Div(className='accounts_transactions_table', children=dbc.Table.from_dataframe(transactions_data, striped=True, bordered=True, hover=True)),
+                                # html.Div(className='accounts_transactions_table', children=dbc.Table.from_dataframe(transactions_data, striped=True, bordered=True, hover=True)),
+                                html.Div(className='accounts_transactions_table', children=[dash_table.DataTable(id='accounts_transactions_table_id', data=transactions_data.to_dict('records'),
+                                         columns=[{'name': col, 'id': col} for col in transactions_data.columns], page_current=0, page_size=20, page_action='native')
+                                        ])
 
                                 ]),
                             ]),

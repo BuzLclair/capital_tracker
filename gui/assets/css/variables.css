@@ -1,0 +1,27 @@
+/* =====================================================
+   Global Variables
+   -----------------------------------------------------
+   These variables apply to the entire application.
+   ===================================================== */
+:root {
+    --primary-bg-color: rgba(255, 255, 255, 0.3);
+    --blur-effect: blur(10px);
+    --bg-blend-mode: lighten;
+    --dashboard-bg-image: url('../images/dashboard-gray-background.jpg');
+
+    --font-family-base: 'Helvetica';
+}
+
+
+
+/* =====================================================
+   Layout Variables (Used in layout.css)
+   -----------------------------------------------------
+   Variables that define widths, heights, paddings, etc.
+   ===================================================== */
+:root {
+    --nav-bg-color: rgba(25, 50, 90, 0.75);
+    --nav-width: 15vw;
+    --nav-gap: 2.5vh;
+    --nav-shadow: 0 0.6vh 0.6vw rgba(0, 0, 0, 0.2);
+}

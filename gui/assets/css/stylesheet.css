@@ -1,54 +1,5 @@
 
 
-html, body{
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    }
-
-body{
-    background-image: url('images/dashboard-gray-background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.3);
-    background-blend-mode: lighten;
-    }
-
-
-.dashboard{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    display: flex;
-    }
-
-
-
-
-/* LEFT PANE */
-
-.navigation-pane-container{
-    position: absolute;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 100%;
-    width: 15vw;
-    gap: 2.5vh;
-    box-shadow: 0 0.6vh 0.6vw rgba(0, 0, 0, 0.2);
-    background-color: rgba(25, 50, 90, .75);
-    }
-
 
 
 /* ---- Title */
@@ -62,25 +13,6 @@ body{
     align-items: center;
     height: 20%;
     width: 100%;
-    }
-
-.title-logo{
-    padding-left: 0.7vw;
-    height: 5vh;
-    width: auto;
-    }
-
-.title-text{
-    font-family: 'Helvetica';
-    font-size: 1.6vw;
-    text-align: left;
-    letter-spacing: 0.085vw;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: rgba(255, 255, 255, 1);
-    -webkit-background-clip: text;
-    color: transparent;
-    width: 60%;
     }
 
 .logo-capital-tracker{
@@ -121,22 +53,22 @@ body{
     padding-left: calc(2.5vw + 8px + 3.2vh) !important; /* to account for the background picture that will come in */
     }
 .navigation-box.overview{
-    background: url('icons/dashboard-icon-overview.png') no-repeat;
+    background: url('../icons/dashboard-icon-overview.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .navigation-box.accounts{
-    background: url('icons/dashboard-icon-accounts.png') no-repeat;
+    background: url('../icons/dashboard-icon-accounts.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .navigation-box.filler2{
-    background: url('icons/dashboard-icon-allocation.png') no-repeat;
+    background: url('../icons/dashboard-icon-allocation.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .navigation-box.filler3{
-    background: url('icons/dashboard-icon-cash.png') no-repeat;
+    background: url('../icons/dashboard-icon-cash.png') no-repeat;
     background-position: 2.5vw;
     background-size: 3vh 3vh !important;
     border-bottom: none !important;
@@ -153,22 +85,22 @@ body{
     background-color: rgba(255, 255, 255, 0.5) !important;
     }
 .tab--selected.overview-selected{
-    background: url('icons/dashboard-icon-overview-black.png') no-repeat;
+    background: url('../icons/dashboard-icon-overview-black.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .tab--selected.accounts-selected{
-    background: url('icons/dashboard-icon-accounts-black.png') no-repeat;
+    background: url('../icons/dashboard-icon-accounts-black.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .tab--selected.filler2-selected{
-    background: url('icons/dashboard-icon-allocation-black.png') no-repeat;
+    background: url('../icons/dashboard-icon-allocation-black.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
 .tab--selected.filler3-selected{
-    background: url('icons/dashboard-icon-cash-black.png') no-repeat;
+    background: url('../icons/dashboard-icon-cash-black.png') no-repeat;
     background-position: 2.5vw;
     background-size: auto 3vh !important;
     }
@@ -278,7 +210,7 @@ div.tab-container--vert div.jsx-2309230230.tab {
     }
 
 .total-portolio-icon{
-    background: url('icons/icon-total-capital.png') no-repeat;
+    background: url('../icons/icon-total-capital.png') no-repeat;
     background-position: center;
     background-size: 75%;
     width: 6.75vh;
@@ -893,6 +825,13 @@ div.tab-container--vert div.jsx-2309230230.tab {
 
 
 
+
+
+html body .accounts_transactions_table .dash-spreadsheet-container table {
+    border-spacing: 0px !important;
+    border-width: 0px !important;
+}
+
 .accounts_transactions_table{
     position: absolute;
     top: 6.5vh;
@@ -900,9 +839,120 @@ div.tab-container--vert div.jsx-2309230230.tab {
     overflow-y: auto;
     height: 76vh;
     width: 75%;
-    font-family: 'Helvetica';
-    font-size: 0.95vw;
 }
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+    font-family: 'Helvetica' !important;
+    font-size: 0.95vw !important;
+    border-collapse: separate !important;
+}
+
+.accounts_transactions_table .dash-spreadsheet-container {
+    border-spacing: 0px !important;
+    width: 100%;
+    table-layout: auto;
+}
+.accounts_transactions_table .dash-header,
+.accounts_transactions_table .dash-cell {
+    border-left: none !important;
+    border-right: none !important;
+}
+.accounts_transactions_table .dash-header {
+    font-size: 1vw !important;
+    font-weight: 550 !important;
+    color: rgba(58,66,75,1) !important;
+    text-align: left !important;
+    border: none !important;
+    border-bottom: 2px solid rgba(34,65,125,1) !important;
+    height: 4vh !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 7vw !important;
+    max-width: 40vw !important;
+    padding-left: 0.5% !important;
+    padding-right: 0.5% !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    background-color: rgba(255,255,255,0.75) !important;
+}
+
+
+.accounts_transactions_table .dash-cell {
+    background-color: rgba(140, 148, 161, 0.3) !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    min-width: 7vw !important;
+    max-width: 40vw !important;
+    padding-left: 0.5% !important;
+    padding-right: 0.5% !important;
+    padding-top: 1% !important;
+    padding-bottom: 1% !important;
+    color: rgba(86, 95, 106, 1) !important;
+    border-width: 0px !important;
+    border-bottom: 1px solid rgba(86, 95, 106, 0.25) !important;
+}
+
+.accounts_transactions_table .dash-header:nth-of-type(4),
+.accounts_transactions_table .dash-cell:nth-of-type(4) {
+    text-align: center !important;
+}
+.accounts_transactions_table .dash-header:nth-of-type(5),
+.accounts_transactions_table .dash-cell:nth-of-type(5) {
+    text-align: right !important;
+    padding-right: 2.5% !important;
+}
+
+
+
+
+.dash-table-container .previous-next-container .page-number {
+    font-family: 'Helvetica' !important;
+    font-size: 0.75vw !important;
+}
+
+.dash-table-container .previous-next-container {
+    text-align: right;
+    background-color: rgba(140,148,161,0.3);
+    border-top: 1px solid rgba(34, 65, 125, 1);
+    height: 2.5vh;
+    padding: 0px 0px !important;
+}
+
+.dash-table-container .previous-next-container .page-number .current-page-container input.current-page {
+    width: 50% !important;
+    height: 75% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.dash-table-container .previous-next-container button.previous-page, .dash-table-container .previous-next-container button.next-page, .dash-table-container .previous-next-container button.first-page, .dash-table-container .previous-next-container button.last-page {
+    transition-duration: 400ms;
+    height: 2vh !important;
+    width: 1.5vw !important;
+    color: rgba(86, 95, 106, 1);
+    background: none;
+}
+
+.dash-table-container .previous-next-container .page-number .current-page-container input.current-page {
+    font-family: 'Helvetica' !important;
+    font-size: 0.75vw !important;
+    border-bottom: 0px !important;
+    background-color: rgba(58, 66, 75, 0.3);
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.current-page-shadow {
+    display: none !important;
+}
+
+
+
+/*
+
 
 .accounts_transactions_table table {
     border-spacing: 0px;
@@ -948,4 +998,6 @@ div.tab-container--vert div.jsx-2309230230.tab {
     text-align: right;
     padding-right: 2.5%;
 }
+
+*/
 
