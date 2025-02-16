@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 
 from dash import html, dcc, dash_table
 from dash.dependencies import Input, Output
-from Longterm_investment.gui.dashboard_utils import category_element_layout, category_element_layout2
+from Longterm_investment.gui.dashboard_utils import category_element_layout, category_element_layout2, category_element_layout3
 
 from Longterm_investment.services.tabs_connection.overview_connection import DataPackage, global_balance_chart, PlatformSplitChart, asset_balance_chart
 from Longterm_investment.services.tabs_connection import accounts_connection
@@ -29,6 +29,13 @@ asset_balance_fig = asset_balance_chart(asset_data_package['historical_amount_pc
 
 # Accounts
 accounts_object = accounts_connection.DataPackage()
+
+snapshot_data = accounts_object.snapshot_data()
+snapshot_charts_object = accounts_connection.SnapshotCharts()
+
+accounts_split_data = accounts_object.accounts_split_package()
+
+
 transactions_data = accounts_object.cleaned_data()
 
 
@@ -41,17 +48,17 @@ transactions_data = accounts_object.cleaned_data()
 app.layout = html.Div(className='dashboard', children=[
 
 
-    html.Div(className='navigation-pane-container', children=[
-        html.Div(className='title-block', children=[
+    html.Div(className='flex-container-column-starts navigation-pane-container', children=[
+        html.Div(className='title-block flex-container-row-center', children=[
             html.Img(className='logo-capital-tracker', src='assets/logo-capital-tracker.png')
             ]),
 
 
-        dcc.Tabs(id='navigation-pane-value', value='overview', vertical=True, style=None, className='navigation-pane', children=[
+        dcc.Tabs(id='navigation-pane-value', value='accounts', vertical=True, style=None, className='flex-container-column-starts navigation-pane', children=[
 
 
 
-            dcc.Tab(label='Overview', value='overview', className='navigation-box overview', selected_className='tab--selected overview-selected', children=[
+            dcc.Tab(label='Overview', value='overview', className='navigation-box nav-box-overview', selected_className='navigation-box--selected nav-box-overview--selected', children=[
                 html.Div(className='main-page overview', children=[
 
 
@@ -109,12 +116,71 @@ app.layout = html.Div(className='dashboard', children=[
 
 
 
-            dcc.Tab(label='Accounts', value='accounts', className='navigation-box accounts', selected_className='tab--selected accounts-selected', children=[
+            dcc.Tab(label='Accounts', value='accounts', className='navigation-box nav-box-accounts', selected_className='navigation-box--selected nav-box-accounts--selected', children=[
 
                 html.Div(className='main-page accounts', children=[
-                    dcc.Tabs(id='accounts-tabs-value', value='transactions', vertical=False, style=None, className='accounts-tabs', children=[
+                    dcc.Tabs(id='accounts-tabs-value', value='financial_snapshot', vertical=False, style=None, className='accounts-tabs', children=[
 
-                        dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box snapshot', selected_className='accounts-box--selected snapshot-selected', children=[]),
+
+                        dcc.Tab(label='Financial snapshot', value='financial_snapshot', className='accounts-box', selected_className='accounts-box--selected snapshot-selected', children=[
+
+                            html.Div(className='snapshot-page', children=[
+                                html.Div(className='financial_snapshot_flows_section', children=[
+                                    html.Div(className='net_cashflows', children=[
+                                        html.Div(className='box-title', children=['Net Cashflows']),
+                                        html.Div(className='box-content content-net_cashflows', children=[]),
+                                        ]),
+
+                                    html.Div(className='financial_snapshot_flows_details', children=[
+                                        html.Div(className='income_profile', children=[
+                                            html.Div(className='box-title', children=['Income Profile']),
+                                            html.Div(className='box-content content-income_profile', children=[]),
+                                            ]),
+
+                                        html.Div(className='expense_breakdown', children=[
+                                            html.Div(className='box-title', children=['Expense Breakdown']),
+                                            html.Div(className='box-content content-expense_breakdown', children=[]),
+                                            ]),
+                                        ]),
+                                    ]),
+
+
+                                html.Div(className='cash_overview', children=[
+                                    html.Div(className='box-title', children=['Cash Overview']),
+                                    html.Div(className='box-content content-cash_overview', children=[
+
+                                        html.Div(className='content-cash_overview-aggregated-section', children=[
+                                            html.Div(className='content-cash_overview-aggregated-section-block1', children=[
+                                                html.Div(className='content-cash_overview-aggregated-section-block1-subsection1', children=[
+                                                    html.Div(className='content-cash_overview-aggregated-section-block1-subsection1-title', children=['Cash Balance']),
+                                                    html.Div(className='content-cash_overview-aggregated-section-block1-subsection1-amount', children=['{:,}'.format(int(snapshot_data['total_cash'].iloc[-1])).replace(",", "'")]),
+                                                    ]),
+                                                html.Div(className='content-cash_overview-aggregated-section-block1-subsection2', children=[
+                                                    dcc.Graph(id='_cash_overview-aggregated-section-chart', className='cash_overview-aggregated-section-chart', figure=snapshot_charts_object.cash_balance_chart(snapshot_data['total_cash'].iloc[-90:]), config={'responsive': False, 'displayModeBar': False})
+                                                    ]),
+                                                ]),
+
+                                            html.Div(className='content-cash_overview-aggregated-section-block2', children=[
+                                                html.Div(className='content-cash_overview-aggregated-section-block2-total_wealth', children=[snapshot_data['value_amount_pct_of_total']]),
+                                                html.Div(className='content-cash_overview-aggregated-section-block2-period_change', children=[snapshot_data['last_month_growth']]),
+                                                ]),
+
+                                            ]),
+
+                                        html.Div(className='content-cash_overview-split-section', children=[
+                                            category_element_layout3(accounts_split_data, platform) for platform in accounts_split_data.keys()
+                                            ]),
+
+                                        ]),
+                                    ]),
+
+                                ]),
+                            ]),
+
+
+
+
+
 
                         dcc.Tab(label='Transactions', value='transactions', className='accounts-box transactions', selected_className='accounts-box--selected transactions-selected', children=[
                             html.Div(className='main-page accounts transactions', children=[
@@ -126,11 +192,13 @@ app.layout = html.Div(className='dashboard', children=[
 
                                 # html.Div(className='accounts_transactions_table', children=dbc.Table.from_dataframe(transactions_data, striped=True, bordered=True, hover=True)),
                                 html.Div(className='accounts_transactions_table', children=[dash_table.DataTable(id='accounts_transactions_table_id', data=transactions_data.to_dict('records'),
-                                         columns=[{'name': col, 'id': col} for col in transactions_data.columns], page_current=0, page_size=20, page_action='native')
+                                         columns=[{'name': col, 'id': col} for col in transactions_data.columns], page_current=0, page_size=20, page_action='native', fixed_rows={'headers': True})
                                         ])
 
                                 ]),
                             ]),
+
+
 
                         dcc.Tab(label='Balance sheet', value='balance_sheet', className='accounts-box balancesheet', selected_className='accounts-box--selected balancesheet-selected', children=[]),
 
@@ -145,11 +213,11 @@ app.layout = html.Div(className='dashboard', children=[
 
 
 
-            dcc.Tab(label='Filler2', value='filler2', className='navigation-box filler2', selected_className='tab--selected filler2-selected', children=[
+            dcc.Tab(label='Filler2', value='filler2', className='navigation-box nav-box-filler2', selected_className='navigation-box--selected nav-box-filler2--selected', children=[
                 ]),
 
 
-            dcc.Tab(label='Filler3', value='filler3', className='navigation-box filler3', selected_className='tab--selected filler3-selected', children=[
+            dcc.Tab(label='Filler3', value='filler3', className='navigation-box nav-box-filler3', selected_className='navigation-box--selected nav-box-filler3--selected', children=[
                 ]),
             ])
 

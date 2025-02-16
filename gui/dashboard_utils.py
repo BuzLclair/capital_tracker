@@ -1,5 +1,7 @@
 from dash import html, dcc
 
+from Longterm_investment.services._services_utils import clean_pct_number
+
 
 def category_element_layout(value_ticker, value_data_package, category_name):
     return html.Div(className=f'{category_name}-exposure-element', children=[
@@ -52,5 +54,31 @@ def category_element_layout2(value_ticker, value_data_package, chart_object, cat
                 ]),
             ]),
         ])
+
+
+
+def category_element_layout3(data, platform_name):
+    return html.Div(className=f'cash-section-credit-card content-cash_overview-split-section-{platform_name}-block', style={'backgroundImage': f"url('assets/images/account-card-{platform_name}.svg')", 'backgroundRepeat': 'no-repeat'}, children=[
+
+        html.Div(className=f'cash-section-main-title content-cash_overview-split-section-{platform_name}-block-title', children=[platform_name], style={'color': data[platform_name]['color'].replace(', 1)', ', 0.95)')}),
+
+        html.Div(className=f'cash-section-main-cash-section content-cash_overview-split-section-{platform_name}-block-cash-section', children=[
+            html.Div(className=f'cash-section-main-cash-block1 cash-section-main-cash-section content-cash_overview-split-section-{platform_name}-block-cash-section-1', children=[
+                html.Div(className=f'cash-section-main-cash-title content-cash_overview-split-section-{platform_name}-block-cash-section-title', children=['Available Cash']),
+                html.Div(className=f'cash-section-main-cash-amount content-cash_overview-split-section-{platform_name}-block-cash-section-amount', children=['{:,}'.format(int(data[platform_name]['available_cash'])).replace(",", "'")]),
+                ]),
+            html.Div(className=f'cash-section-main-cash-change content-cash_overview-split-section-{platform_name}-block-cash-section-change', children=[data[platform_name]['delta_cash_since_pm'] + " since previous month"]),
+            ]),
+
+        html.Div(className=f'content-cash_overview-split-section-{platform_name}-block-stats', children=[
+            html.Div(className=f'content-cash_overview-split-section-{platform_name}-block-stats-transactions', children=[]),
+
+            html.Div(className=f'content-cash_overview-split-section-{platform_name}-block-stats-repartition', children=[]),
+            ]),
+
+        ])
+
+
+
 
 

@@ -1,0 +1,19 @@
+/* =====================================================
+   FLEX BASE CLASS
+   -----------------------------------------------------
+   A default flex container to standardize layouts.
+   ===================================================== */
+.flex-container-row-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-container-column-starts {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

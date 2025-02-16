@@ -1,718 +1,8 @@
-
-
-
-
-/* ---- Title */
-
-.title-block {
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 20%;
-    width: 100%;
-    }
-
-.logo-capital-tracker{
-    width: 85%;
-    height:auto;
-    }
-
-
-
-/* ---- Navigation */
-.navigation-pane{
-    position: absolute;
-    top: 20vh;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    width: 15vw;
-    gap: 2.5vh;
-    }
-
-
-.navigation-box{
-    height: 6vh;
-    width: 10vw;
-    transition: all 0.3s ease-in-out;
-    font-family: 'Helvetica';
-    font-size: 1.2vw;
-    color: rgba(255, 255, 255, .7);
-    letter-spacing: 0.09vw;
-    font-weight: 550;
-    background-color: transparent !important;
-    border: none !important;
-    display: flex !important;
-    justify-content: left !important;
-    align-items: center !important;
-    padding-left: calc(2.5vw + 8px + 3.2vh) !important; /* to account for the background picture that will come in */
-    }
-.navigation-box.overview{
-    background: url('../icons/dashboard-icon-overview.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.navigation-box.accounts{
-    background: url('../icons/dashboard-icon-accounts.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.navigation-box.filler2{
-    background: url('../icons/dashboard-icon-allocation.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.navigation-box.filler3{
-    background: url('../icons/dashboard-icon-cash.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: 3vh 3vh !important;
-    border-bottom: none !important;
-    }
-
-.navigation-box:hover{
-    box-shadow: 0 0.5vh 0.5vw rgba(58, 66, 75, .8);
-    border-radius: 30px 0px 0px 30px;
-    }
-
-.tab--selected{
-    box-shadow: 0 0.5vh 0.5vw rgba(58, 66, 75, .8);
-    border-radius: 30px 0px 0px 30px;
-    background-color: rgba(255, 255, 255, 0.5) !important;
-    }
-.tab--selected.overview-selected{
-    background: url('../icons/dashboard-icon-overview-black.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.tab--selected.accounts-selected{
-    background: url('../icons/dashboard-icon-accounts-black.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.tab--selected.filler2-selected{
-    background: url('../icons/dashboard-icon-allocation-black.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-.tab--selected.filler3-selected{
-    background: url('../icons/dashboard-icon-cash-black.png') no-repeat;
-    background-position: 2.5vw;
-    background-size: auto 3vh !important;
-    }
-
-
-div.tab-container--vert div.jsx-2309230230.tab {
-    border-bottom: none !important;
-    }
-
-
-.main-page{
-    position: absolute;
-    width: calc(100vw - 15vw - 2vw);
-    height: calc(100vh - 10vh - 5vh);
-    top: 10vh;
-    left: 15vw;
-    padding-top: 5vh;
-    padding-left: 2vw;
-    }
-
-.overview-box{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    }
-
-.box-title{
-    height: 6vh;
-    font-family: 'Helvetica';
-    font-size: 1.26vw;
-    color: rgba(86, 95, 106, 1);
-    line-height: 3vh;
-    letter-spacing: 0.16vw;
-    font-weight: 550;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 1vw;
-    }
-
-.box-content{
-    flex-grow: 1;
-    background-color: rgba(140, 148, 161, 0.3);
-    box-shadow: 0 1.2vh 2.5vw 0 rgba(86, 95, 106, 0.37);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 10px;
-    border: 1px solid rgba(140, 148, 161, 0.18);
-    }
-
-
-.overview-box.total-capital{
-    position: absolute;
-    top: 5.5vh;
-    left: 2vw;
-    height: 19vh;
-    width: 24vw;
-    }
-
-.overview-box.account-breakdown{
-    position: absolute;
-    top: 5.5vh;
-    left: 28vw;
-    height: 33vh;
-    width: 57vw;
-    }
-
-.overview-box.currency-exposure{
-    position: absolute;
-    top: 26.5vh;
-    left: 2vw;
-    height: 31vh;
-    width: 24vw;
-    }
-
-.overview-box.asset-segmentation{
-    position: absolute;
-    top: 59.5vh;
-    left: 2vw;
-    height: 30.5vh;
-    width: 24vw;
-    }
-
-.overview-box.capital-trend{
-    position: absolute;
-    top: 40.5vh;
-    left: 28vw;
-    height: 49.5vh;
-    width: 57vw;
-    }
-
-
-
-
-/* ------------------------------ Overview - total capital */
-
-.box-content.total-capital{
-    height: 84%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 2vw;
-    gap: 3vw;
-    }
-
-.total-portolio-icon{
-    background: url('../icons/icon-total-capital.png') no-repeat;
-    background-position: center;
-    background-size: 75%;
-    width: 6.75vh;
-    height: 6.75vh;
-    background-color: rgba(179, 186, 197, 1);
-    border-radius: 50%;
-    box-shadow:  0.31vw 0.59vh 0.63vw rgba(0, 0, 0, 0.1),  /* Outer shadow for lifted effect */
-                 -0.63vw -1.19vh 1.17vw rgba(255, 255, 255, 0.8); /* Inner shadow for pressed effect */
-    border: none;
-    }
-
-
-.total-portolio-value-box{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: left;
-    gap: 1vh;
-    }
-.total-portolio-value-box-main{
-    font-family: 'Roboto';
-    font-size: 3.15vw;
-    color: rgba(58, 66, 75, 1);
-    line-height: 4.45vh;
-    letter-spacing: 0.16vw;
-    font-weight: 550;
-    text-align: left;
-    padding-bottom: 1vh;
-    }
-.total-portolio-value-box-growth{
-    font-family: 'Helvetica';
-    font-size: 1.03vw;
-    color: rgba(140, 148, 161, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: left;
-    position: absolute;
-    bottom: 2vh;
-    }
-
-
-
-
-
-
-
-/* ------------------------------ Overview - capital trend */
-
-.box-content.capital-trend{
-    background-color: rgba(34, 65, 125, 0.3);
-    padding-right: 2%;
-    padding-top: 1%;
-    }
-.capital-trend-chart-box{
-    width: 100%;
-    height: 95%;
-    display: flex;
-    flex-flow: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 2%;
-    }
-.capital-trend-chart{
-    width: 98%;
-    height: 90%;
-    }
-
-
-
-.capital-trend-timeline{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(86, 95, 106, 0.2);
-    border-radius: 16px;
-    }
-.capital-trend-timeline-radio{
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    }
-.capital-trend-timeline-radio-label{
-    font-family: 'Helvetica';
-    font-size: 0.95vw;
-    font-weight: 500;
-    background-color: transparent;
-    transition: all 0.1s ease-in-out;
-    box-shadow: none;
-    border: none;
-    outline: none;
-    padding: 0vw 1.78vh;
-    color: rgba(86, 95, 106, 1);
-    border-radius: 0.95vw;
-    cursor: pointer;
-    min-width: 20%;
-    border: 0.078vw solid transparent;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 100%;
-    }
-.capital-trend-timeline-radio-label:hover{
-    background-color: rgba(86, 95, 106, 0.4);
-    padding: 0vw 1.8vh;
-    }
-.capital-trend-timeline-radio-input{
-    display: none;
-    }
-.capital-trend-timeline-radio input:checked + .capital-trend-timeline-radio-label {
-    background-color: rgba(86, 95, 106, 0.6);
-    font-size: 0.95vw;
-    font-weight: 700;
-    color: rgba(58, 66, 75, 1);
-    border: 0.078vw solid rgba(86, 95, 106, 0.7);
-    padding: 0px 1.78vh;
-    }
-
-
-
-
-/* ------------------------------ Overview - ccy exposure */
-.box-content.currency-exposure{
-    display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: top;
-    width: 100%;
-    background-color: transparent;
-    gap: 3%;
-    padding-top: 0%;
-    box-shadow: 0 0 0 0 rgba(86, 95, 106, 0);
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    border-radius: 10px;
-    border: 0px solid rgba(140, 148, 161, 0);
-    overflow-y: auto;
-    }
-
-::-webkit-scrollbar {
-    width: 0.39vw;
-    }
-::-webkit-scrollbar-thumb:hover{
-    background-color: rgba(58, 66, 75, 0.5);
-    }
-::-webkit-scrollbar-thumb{
-    background-color: rgba(58, 66, 75, 0.4);
-    border-radius: 50px;
-    }
-::-webkit-scrollbar-track{
-    -webkit-box-shadow: inset 0 0 6px rgba(58, 66, 75, 0.4);
-    -webkit-border-radius: 50px;
-    border-radius: 50px;
-    }
-
-
-
-.currency-exposure-element{
-    display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    box-sizing: border-box;
-    gap: 5%;
-    background-color: rgba(58, 66, 75, 0.3);
-    box-shadow: 0 1.19vh 2.5vw 0 rgba(86, 95, 106, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 10px;
-    border: 1px solid rgba(140, 148, 161, 0.18);
-    height: 7.8vh;
-    }
-.currency-exposure-element-group1{
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    width: 100%;
-    gap: 2%;
-    }
-.currency-exposure-element-primary-text-box{
-    display: flex;
-    flex-flow: column;
-    width: 100%;
-    }
-.currency-exposure-element-group2{
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    }
-
-
-
-.currency-exposure-element-icon{
-    background-position: center;
-    background-size: 95%;
-    height: 75%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background-color: transparent;
-    border-radius: 50%;
-    box-shadow:  0.234vw 0.45vh 0.468vw rgba(0, 0, 0, 0.2),  /* Outer shadow for lifted effect */
-                 -0.234vw -0.45vh 0.468vw rgba(255, 255, 255, 0.4); /* Inner shadow for pressed effect */
-    border: none;
-    }
-.currency-exposure-element-primary-text-ticker{
-    font-family: 'Roboto';
-    font-size: 1.15vw;
-    color: rgba(58, 66, 75, 1);
-    letter-spacing: 0.156vw;
-    font-weight: 550;
-    text-align: left;
-    }
-.currency-exposure-element-primary-text-name{
-    font-family: 'Helvetica';
-    font-size: 0.85vw;
-    color: rgba(86, 95, 106, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: left;
-    white-space: nowrap;
-    }
-.currency-exposure-element-primary-text-box{
-    font-family: 'Roboto';
-    font-size: 1.3vw;
-    color: rgba(58, 66, 75, 1);
-    letter-spacing: 0.156vw;
-    font-weight: 550;
-    text-align: right;
-    }
-
-
-.currency-exposure-element-bar-container{
-    position: relative;
-    width: 100%;
-    height: 1vh;
-    }
-.currency-exposure-element-pct-bar-empty{
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(86, 95, 106, 1);
-    border-radius: 50px;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    }
-.currency-exposure-element-pct-bar{
-    background-color: rgba(50, 100, 180, 1);
-    border-radius: 50px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    transition: width 0.5s ease;
-    }
-
-.currency-exposure-element-pct-value{
-    font-family: 'Helvetica';
-    font-size: 0.85vw;
-    color: rgba(58, 66, 75, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: left;
-    }
-.currency-exposure-element-pct-change{
-    font-family: 'Helvetica';
-    font-size: 0.85vw;
-    color: rgba(86, 95, 106, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: left;
-    font-style: italic;
-    }
-
-
-
-
-
-/* ------------------------------ Overview - platform exposure */
-.box-content.account-breakdown{
-    display: flex;
-    flex-flow: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100%;
-    background-color: transparent;
-    gap: 2%;
-    padding-left: 0;
-    box-shadow: 0 0 0 0 rgba(86, 95, 106, 0);
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    border-radius: 10px;
-    border: 0px solid rgba(140, 148, 161, 0);
-    overflow-x: auto;
-    overflow-y: hidden;
-    }
-::-webkit-scrollbar {
-    height: 0.74vh;
-    }
-
-.platform-exposure-element{
-    display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: top;
-    height: 100%;
-    width: 27%;
-    min-width: 27%;
-    max-width: 27%;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    box-sizing: border-box;
-    gap: 5%;
-    background-color: rgba(34, 65, 125, 0.3);
-    box-shadow: 0 1.19vh 2.5vw 0 rgba(86, 95, 106, 0.37);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 10px;
-    border: 0.078vw solid rgba(140, 148, 161, 0.18);
-    }
-
-
-.platform-exposure-element-group1{
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-    align-items: top;
-    width: 100%;
-    min-height: 25%;
-    max-height: 25%;
-    gap: 5%;
-    padding-top: 8%;
-    }
-.platform-exposure-element-primary-text-box{
-    display: flex;
-    flex-flow: column;
-    }
-.platform-exposure-element-primary-text-ticker{
-    font-family: 'Roboto';
-    font-size: 1.26vw;
-    color: rgba(34, 65, 125, 1);
-    letter-spacing: 0.16vw;
-    font-weight: 550;
-    text-align: left;
-    }
-.platform-exposure-element-primary-text-name{
-    font-family: 'Helvetica';
-    font-size: 0.95vw;
-    color: rgba(86, 95, 106, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: left;
-    white-space: wrap;
-    }
-
-.platform-exposure-element-icon{
-    background-position: center;
-    background-size: 75%;
-    height: 85%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background-color: rgba(58, 66, 75, 0.4);
-    border-radius: 20%;
-    box-shadow:  0.234vw 0.45vh 0.468vw rgba(0, 0, 0, 0.2),  /* Outer shadow for lifted effect */
-                 -0.234vw -0.45vh 0.468vw rgba(255, 255, 255, 0.4); /* Inner shadow for pressed effect */
-    border: none;
-    }
-
-
-.platform-exposure-element-total-amount{
-    font-family: 'Roboto';
-    font-size: 2.21vw;
-    color: rgba(34, 65, 125, 1);
-    letter-spacing: 0.16vw;
-    font-weight: 550;
-    text-align: right;
-    width: 100%;
-    }
-
-
-
-.platform-exposure-element-charts-section{
-    display: flex;
-    flex_flow: row;
-    flex-align: flex-start;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    gap: 5%;
-    }
-
-.platform-exposure-element-trend-chart-box{
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: bottom;
-    gap: 2%;
-    }
-.platform-trend-chart{
-    height: 70%;
-    width: 100%;
-    }
-.platform-trend-text{
-    font-family: 'Helvetica';
-    font-size: 0.75vw;
-    color: rgba(86, 95, 106, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: center;
-    white-space: wrap;
-    font-style: italic;
-    }
-
-
-.platform-exposure-element-split-chart-box{
-    width: 50%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    }
-.platform-split-chart{
-    height: 100%;
-    width: 100%;
-    grid-column: 1;
-    grid-row: 1;
-    }
-.platform-split-text{
-    font-family: 'Helvetica';
-    font-size: 0.75vw;
-    color: rgba(86, 95, 106, 1);
-    letter-spacing: 0.078vw;
-    font-weight: normal;
-    text-align: center;
-    white-space: nowrap;
-    font-style: italic;
-    grid-column: 1;
-    grid-row: 1;
-    }
-
-
-
-
-
-
-
-/* ------------------------------ Overview - asset segmentation */
-.box-content.asset-segmentation{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    align-items: flex-start;
-    justify-content: center;
-    }
-
-.asset-segmentation-chart{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
-/* ------------------------------------------------------------ ACCOUNTS ------------------------------------------------------------ */
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
+/* =====================================================
+   Accounts - Global
+   -----------------------------------------------------
+
+   ===================================================== */
 
 .main-page.accounts{
     position: absolute;
@@ -780,11 +70,11 @@ div.tab-container--vert div.jsx-2309230230.tab {
     }
 
 
+/* =====================================================
+   Accounts - Transactions
+   -----------------------------------------------------
 
-
-
-
-
+   ===================================================== */
 
 .main-page.accounts.transactions{
     position: absolute;
@@ -825,9 +115,11 @@ div.tab-container--vert div.jsx-2309230230.tab {
 
 
 
+#accounts_transactions_table_id {
+    height: 95%;
+}
 
-
-html body .accounts_transactions_table .dash-spreadsheet-container table {
+.accounts_transactions_table .dash-spreadsheet-container table {
     border-spacing: 0px !important;
     border-width: 0px !important;
 }
@@ -836,9 +128,8 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
     position: absolute;
     top: 6.5vh;
     left: 0;
-    overflow-y: auto;
-    height: 76vh;
     width: 75%;
+    height: 92.5%;
 }
 .dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
     font-family: 'Helvetica' !important;
@@ -848,8 +139,10 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
 
 .accounts_transactions_table .dash-spreadsheet-container {
     border-spacing: 0px !important;
-    width: 100%;
-    table-layout: auto;
+    table-layout: fixed !important;
+    overflow-y: auto !important;
+    max-height: 100% !important;
+    width: 100% !important;
 }
 .accounts_transactions_table .dash-header,
 .accounts_transactions_table .dash-cell {
@@ -868,7 +161,7 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     min-width: 7vw !important;
-    max-width: 40vw !important;
+    max-width: 26vw !important;
     padding-left: 0.5% !important;
     padding-right: 0.5% !important;
     position: sticky !important;
@@ -884,7 +177,7 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
     white-space: normal !important;
     word-wrap: break-word !important;
     min-width: 7vw !important;
-    max-width: 40vw !important;
+    max-width: 26vw !important;
     padding-left: 0.5% !important;
     padding-right: 0.5% !important;
     padding-top: 1% !important;
@@ -903,8 +196,6 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
     text-align: right !important;
     padding-right: 2.5% !important;
 }
-
-
 
 
 .dash-table-container .previous-next-container .page-number {
@@ -951,53 +242,288 @@ html body .accounts_transactions_table .dash-spreadsheet-container table {
 
 
 
-/*
+/* =====================================================
+   Accounts - Snapshot
+   -----------------------------------------------------
+
+   ===================================================== */
+
+.snapshot-page {
+    position: absolute;
+    width: calc(100vw - 15vw - 2vw);
+    height: calc(100vh - 10vh - 5.5vh);
+    top: 10vh;
+    left: 0vw;
+    padding-top: 0.5vh;
+    padding-left: 0vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2%;
+}
+
+.financial_snapshot_flows_section {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 70%;
+    height: 100%;
+    gap: 2%;
+}
 
 
-.accounts_transactions_table table {
-    border-spacing: 0px;
+
+.net_cashflows{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 35%;
     width: 100%;
-    table-layout: auto;
+    }
+
+
+.financial_snapshot_flows_details {
+    display: flex;
+    flex-flow: row;
+    flex-direction: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 65%;
+    gap: 2%;
+    top: 15vh;
 }
-.accounts_transactions_table thead th {
-    font-size: 1vw;
+
+
+.income_profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 19vh;
+    width: 50%;
+    height: 100%
+}
+
+.expense_breakdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 19vh;
+    width: 50%;
+    height: 100%;
+}
+
+
+
+
+.cash_overview {
+    width: 30%;
+    height: 92.96%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.content-cash_overview {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+
+.content-cash_overview-aggregated-section {
+    background-color: rgba(58, 66, 75, 0.4);
+    border-radius: 10px 10px 0 0;
+    height: 29%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content-cash_overview-aggregated-section-block1 {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 65%;
+    gap: 5%;
+    padding-top: 1.25vh;
+}
+
+.content-cash_overview-aggregated-section-block1-subsection1 {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5%;
+    height: 100%;
+    width: 50%;
+}
+.content-cash_overview-aggregated-section-block1-subsection1-title {
+    font-family: 'Roboto';
+    font-size: 1.26vw;
+    color: rgba(50, 100, 180, 1);
+    letter-spacing: 0.16vw;
     font-weight: 550;
+    text-align: left;
+    padding-left: 1vw;
+    padding-top: 3.5vh;
+}
+.content-cash_overview-aggregated-section-block1-subsection1-amount {
+    font-family: 'Roboto';
+    font-size: 2.7vw;
     color: rgba(58, 66, 75, 1);
-    text-align: left;
-    border-bottom: 2px solid rgba(34, 65, 125, 1);
-    height: 4vh;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 6vw;
-    max-width: 40vw;
-    padding-left: 0.5%;
-    padding-right: 0.5%;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: rgba(255, 255, 255, 0.75);
-}
-.accounts_transactions_table tbody td {
-    background-color: rgba(140, 148, 161, 0.3);
-    text-align: left;
-    white-space: normal;
-    word-wrap: break-word;
-    min-width: 7vw;
-    max-width: 40vw;
-    padding-left: 0.5%;
-    padding-right: 0.5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    color: rgba(86, 95, 106, 1);
-    border-bottom: 1px solid rgba(86, 95, 106, 0.1);
-}
-
-.accounts_transactions_table th:nth-child(5),
-.accounts_transactions_table td:nth-child(5) {
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    padding-left: 0vw;
+    width: 100%;
     text-align: right;
-    padding-right: 2.5%;
 }
 
-*/
 
+.content-cash_overview-aggregated-section-block1-subsection2 {
+    position: relative;
+    height: 77%;
+    width: 50%;
+    padding-top: 3.5vh;
+    display: flex;
+    align-items: center;
+}
+.cash_overview-aggregated-section-chart{
+    height: 85%;
+    width: 100%;
+    }
+
+.content-cash_overview-aggregated-section-block2 {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 30%;
+    gap: 0%;
+}
+
+.content-cash_overview-aggregated-section-block2-total_wealth {
+    font-family: var(--font-family-base);
+    font-size: 0.9vw;
+    color: rgba(58, 66, 75, .85);
+    letter-spacing: ;
+    font-weight: normal;
+    text-align: center;
+    width: 50%;
+    font-style: italic;
+    padding-left: 1vw;
+}
+.content-cash_overview-aggregated-section-block2-period_change {
+    font-family: var(--font-family-base);
+    font-size: 0.9vw;
+    color: rgba(58, 66, 75, .85);
+    letter-spacing: ;
+    font-weight: normal;
+    text-align: center;
+    width: 50%;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+.content-cash_overview-split-section {
+    background-color: rgba(179, 186, 197, 0.3) !important;
+    height: 71%;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0%;
+    overflow-y: auto;
+    padding-top: 2%;
+    box-sizing: border-box;
+}
+
+.cash-section-credit-card {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    height: auto;
+    width: 90%;
+    background-position: center;
+    aspect-ratio: 3017 / 2041;
+    object-fit: cover;
+    background-size: contain;
+    background-color: transparent;
+    box-sizing: border-box;
+    filter: drop-shadow(2vw 2vw 4vw rgba(0, 0, 0, 0.25));
+
+    padding-top: 3vh;
+    padding-left: 1.9vw;
+}
+
+.cash-section-main-title {
+    font-family: 'Roboto';
+    font-size: 1.30vw;
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    text-align: left;
+}
+
+.cash-section-main-cash-section {
+    padding-top: 6vh;
+    display: flex;
+    flex-flow: row;
+    height: 10%;
+    width: 100%;
+}
+
+
+.cash-section-main-cash-block1 {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    width: 50%;
+    height: 100%;
+    padding-top: 0vh;
+}
+.cash-section-main-cash-title {
+    font-family: 'Roboto';
+    font-size: 1.00vw;
+    color: rgba(58, 66, 75, 1);
+    letter-spacing: 0.10vw;
+    font-weight: 500;
+    text-align: left;
+}
+.cash-section-main-cash-amount {
+    font-family: 'Roboto';
+    font-size: 2.00vw;
+    color: rgba(34, 65, 125, 1);
+    letter-spacing: 0.2vw;
+    font-weight: 700;
+    text-align: center;
+}
+.cash-section-main-cash-change {
+    padding-top: 1.5vw;
+    font-family: var(--font-family-base);
+    font-size: 0.85vw;
+    color: rgba(58, 66, 75, .85);
+    font-weight: normal;
+    text-align: left;
+    width: 30%;
+    font-style: italic;
+    padding-left: 0vw;
+    padding-right: 4.0vw;
+}

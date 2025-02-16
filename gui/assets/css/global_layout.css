@@ -1,0 +1,210 @@
+/* =====================================================
+   Global Styles
+   -----------------------------------------------------
+   Resets, general body styles, and universal properties.
+   ===================================================== */
+
+html, body, .dashboard {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: var(--dashboard-bg-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: var(--blur-effect);
+    background-color: var(--primary-bg-color);
+    background-blend-mode: var(--bg-blend-mode);
+}
+
+
+/* =====================================================
+   Specific Styles for .dashboard
+   ===================================================== */
+.dashboard {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    width: 0.39vw;
+    height: 0.74vh;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(58, 66, 75, 0.5);
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(58, 66, 75, 0.4);
+    border-radius: 50px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(58, 66, 75, 0.4);
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+
+
+/* =====================================================
+   Navigation Pane (Left Sidebar)
+   -----------------------------------------------------
+   Defines the structure and appearance of the left-side
+   navigation pane, which remains consistent across tabs.
+   ===================================================== */
+
+.navigation-pane-container {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: var(--nav-width);
+    gap: var(--nav-gap);
+
+    /* Styling */
+    box-shadow: var(--nav-shadow);
+    background-color: var(--nav-bg-color);
+}
+
+
+/* =====================================================
+   Title Block (Logo Section)
+   -----------------------------------------------------
+   Ensures the title/logo is correctly positioned inside
+   the navigation panel.
+   ===================================================== */
+.title-block {
+    width: 100%;
+    height: 20%;
+}
+
+/* Logo inside the title block */
+.logo-capital-tracker {
+    width: 85%;
+    height: auto;
+}
+
+
+
+
+/* =====================================================
+   Tab Selection Styles
+   -----------------------------------------------------
+   Styles for tabs, including hover effects, selected
+   states, and icon updates.
+   ===================================================== */
+.navigation-pane {
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    align-items: stretch;
+    width: 15vw;
+    gap: 2.5vh;
+}
+
+
+/* Navigation Box (General) */
+.navigation-box {
+    height: 6vh;
+    font-family: var(--font-family-base);
+    background-color: transparent !important;
+    font-size: 1.2vw;
+    color: rgba(255, 255, 255, .7);
+    letter-spacing: 0.09vw;
+    font-weight: 550;
+    border: none !important;
+    display: flex !important;
+    justify-content: left !important;
+    align-items: center !important;
+    padding-left: calc(2.5vw + 8px + 3.2vh) !important; /* to account for the background picture that will come in */
+
+    background-size: auto var(--icon-size) !important;
+    background-position: var(--nav-box-bg-position) !important;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Customize the icons */
+.nav-box-overview {background: url('../icons/dashboard-icon-overview.png') no-repeat;}
+.nav-box-accounts {background: url('../icons/dashboard-icon-accounts.png') no-repeat;}
+.nav-box-filler2 {background: url('../icons/dashboard-icon-allocation.png') no-repeat;}
+.nav-box-filler3 {background: url('../icons/dashboard-icon-cash.png') no-repeat;}
+
+.nav-box-overview--selected {background: url('../icons/dashboard-icon-overview-black.png') no-repeat;}
+.nav-box-accounts--selected {background: url('../icons/dashboard-icon-accounts-black.png') no-repeat;}
+.nav-box-filler2--selected {background: url('../icons/dashboard-icon-allocation-black.png') no-repeat;}
+.nav-box-filler3--selected {background: url('../icons/dashboard-icon-cash-black.png') no-repeat;}
+
+
+/* Other navigation customization */
+.navigation-box:hover, .navigation-box--selected {
+    box-shadow: var(--nav-box-shadow) !important;
+    border-radius: var(--nav-box-border-radius) !important;
+    }
+.navigation-box--selected {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+div.tab-container--vert div.jsx-2309230230.tab {
+    border-bottom: none !important;
+    }
+
+
+
+
+
+/* =====================================================
+   Main Page Selection Styles
+   -----------------------------------------------------
+   Styles for the main page container.
+   ===================================================== */
+
+.main-page {
+    position: absolute;
+    width: calc(100vw - 15vw - 2vw);
+    height: calc(100vh - 10vh - 5vh);
+    top: 10vh;
+    left: 15vw;
+    padding-top: 5vh;
+    padding-left: 2vw;
+}
+
+
+/* Style for the boxes in the main page */
+.overview-box {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.box-title {
+    font-family: var(--font-family-base);
+    font-size: 1.26vw;
+    color: rgba(var(--palette-dark-grey), 1);
+    line-height: 3vh;
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    text-transform: uppercase;
+
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1vw;
+}
+
+.box-content {
+    flex-grow: 1;
+    background-color: rgba(var(--palette-medium-grey), 0.3);
+    box-shadow: 0 1.2vh 2.5vw 0 rgba(var(--palette-dark-grey), 0.37);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(var(--palette-medium-grey), 0.18);
+}
