@@ -108,8 +108,11 @@ class SnapshotCharts:
 
 
 
-
-
 if __name__ == '__main__':
     z = DataPackage()
     z1 = z.accounts_split_package()
+
+    z2 = z.data.loc[~z.data['type'].isin(['Expense'])]
+    z3 = z2['type'].unique()
+
+

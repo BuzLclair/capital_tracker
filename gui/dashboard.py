@@ -139,10 +139,25 @@ app.layout = html.Div(className='dashboard', children=[
 
                                         html.Div(className='expense_breakdown', children=[
                                             html.Div(className='box-title', children=['Expense Breakdown']),
-                                            html.Div(className='box-content content-expense_breakdown', children=[]),
+                                            html.Div(className='box-content content-expense_breakdown', children=[
+                                                html.Div(className='content-expense_breakdown_big_4-first', children=[
+                                                    html.Div(className='content-expense_breakdown_big_4-1', children=['Fixed / variable exp.']),
+                                                    html.Div(className='content-expense_breakdown_big_4-2', children=['% Split']),
+                                                    ]),
+                                                html.Div(className='content-expense_breakdown_big_4-second', children=[
+                                                    html.Div(className='content-expense_breakdown_big_4-3', children=['Nb by month']),
+                                                    html.Div(className='content-expense_breakdown_big_4-4', children=['Avg by month']),
+                                                    ]),
+                                                html.Div(className='content-expense_breakdown_prev_month', children=['PM'])
+
+                                                ]),
                                             ]),
                                         ]),
                                     ]),
+
+
+
+
 
 
                                 html.Div(className='cash_overview', children=[
