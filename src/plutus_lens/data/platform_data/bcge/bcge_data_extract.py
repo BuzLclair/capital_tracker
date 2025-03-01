@@ -16,69 +16,45 @@ EXCEL_EXTRACT_PATH = f'{RAW_DATA_PATH}/bcge/bcge_data_extraction.xlsx'
 def loading_and_preclean_data():
     df = pd.read_excel(EXCEL_EXTRACT_PATH)
 
-    df['Column3'] = df['Column1'].fillna('') + ' ' + df['Column2'].fillna('') + ' ' + df['Column3'].fillna('')
-    df['Column3'] = df['Column3'].replace('  ', np.nan)
-    df.drop(columns=['Column1', 'Column2', 'Column13'], inplace=True)
+    df = df.loc[~(df.iloc[:,:7].isna().all(axis=1))]
+    df['Column3'] = df['Column1'].fillna('') + ' ' + df['Column2'].fillna('') + ' ' + df['Column3'].fillna('') + df['Column4'].fillna('')
+    df['Column3'] = df['Column3'].str.lstrip()
+    df.drop(columns=['Column1', 'Column2', 'Column4', 'Column13'], inplace=True)
 
-    mask = df.loc[:, 'Column4':'Column12'].isna().all(axis=1)
-    previous_index = None
-    merged_values = []
+    for txt in ['CP 2251 - 1211 Genève 2', 'A défaut d\'une réclamation écrite reçue par la banque', 'de comptes sont tenus pour approuvés.', '58 211 21 00', '0000OOKUP,fodLkup', 'Solde au']:
+        df.loc[((df['Column3'].astype(str).str.contains(txt)))] = ''
+    df.loc[(df['Column3'] == '')] = ''
 
-    for idx in df.index:
-        if mask[idx]:
-            value = df.at[idx, 'Column3']
-            if pd.notna(value):
-                merged_values.append(str(value))
+    df = df.loc[df['Column3'] == df['Column3']]
+    temp_index = ((df['Column3'].str[:6].str.count(r'\.')==2) & (df['Column3'].str[:6].str.count(' ')==0)) * df.index
+    temp_index = temp_index.replace(0, np.nan).ffill(limit=2)
+
+    df['test'] = temp_index
+    df = df.loc[df['test'] == df['test']]
+
+    df_cleaned = df.fillna('').groupby('test').transform(lambda x: ' '.join(x.astype(str))).drop_duplicates()
+    df_cleaned = df_cleaned.map(lambda x: re.sub(r'\s+', ' ', x).strip() if isinstance(x, str) else x)
+    return df_cleaned
+
+
+
+def clean_list(lst):
+    date_pattern = re.compile(r'\b\d{2}\.\d{2}\.\d{2}\b')
+    cleaned_list, found_date, prev_blank = [lst[0]], False, False
+
+    for val in lst[1:]:
+        if not found_date:
+            if date_pattern.match(val):
+                found_date = True
+                cleaned_list.append(val)
         else:
-            if merged_values and previous_index is not None:
-                df.at[previous_index, 'Column3'] = f"{df.at[previous_index, 'Column3']} {' '.join(merged_values)}".strip()
-                merged_values = []
-            previous_index = idx
-
-    if merged_values and previous_index is not None:
-        df.at[previous_index, 'Column3'] = f"{df.at[previous_index, 'Column3']} {' '.join(merged_values)}".strip()
-
-    df = df[~mask].reset_index(drop=True)
-    return df
-
-
-def filtering_df(df, process_dict):
-    mask = df.loc[:, process_dict['mask_na']].isna().all(axis=1) & df.loc[:, process_dict['mask_notna']].notna().all(axis=1)
-    shifted_col = process_dict['shifted_col']
-    df.loc[mask, shifted_col] = df.loc[mask, shifted_col].shift(periods=process_dict['shifted_periods'], axis=1)
-    return df
-
-
-def process_dataframe(df):
-    basic_shifted_col = df.loc[:, 'Column4':'Column12'].columns
-    processing_list1 = [
-        {'mask_notna': ['Column3', 'Column8'], 'mask_na': ['Column4', 'Column5', 'Column6', 'Column7'], 'shifted_col': basic_shifted_col, 'shifted_periods': -4},
-        {'mask_notna': ['Column3', 'Column9'], 'mask_na': ['Column4', 'Column5', 'Column6', 'Column7', 'Column8'], 'shifted_col': basic_shifted_col, 'shifted_periods': -5},
-        {'mask_notna': ['Column3'], 'mask_na': ['Column4', 'Column5', 'Column6'], 'shifted_col': basic_shifted_col, 'shifted_periods': -3},
-        {'mask_notna': ['Column3'], 'mask_na': ['Column4', 'Column5'], 'shifted_col': basic_shifted_col, 'shifted_periods': -2},
-        {'mask_notna': ['Column3', 'Column5'], 'mask_na': ['Column4'], 'shifted_col': basic_shifted_col, 'shifted_periods': -1}]
-
-    processing_list2 = [
-        {'mask_notna': ['Column3', 'Column4', 'Column5'], 'mask_na': ['Column6', 'Column7'], 'shifted_col': df.loc[:, 'Column7':'Column12'].columns, 'shifted_periods': -1},
-        {'mask_notna': ['Column4', 'Column6'], 'mask_na': ['Column3', 'Column5'], 'shifted_col': df.loc[:, 'Column5':'Column12'].columns, 'shifted_periods': -1},
-        {'mask_notna': ['Column4', 'Column5'], 'mask_na': ['Column3'], 'shifted_col': df.columns, 'shifted_periods': -1},
-        {'mask_notna': ['Column3', 'Column4', 'Column6', 'Column8'], 'mask_na': ['Column7'], 'shifted_col': df.loc[:, 'Column7':'Column12'].columns, 'shifted_periods': -1},
-        {'mask_notna': ['Column3', 'Column4', 'Column7', 'Column8'], 'mask_na': ['Column5'], 'shifted_col': df.loc[:, 'Column6':'Column12'].columns, 'shifted_periods': -1},
-        {'mask_notna': ['Column3', 'Column4'], 'mask_na': ['Column5', 'Column6'], 'shifted_col': df.loc[:, 'Column5':'Column12'].columns, 'shifted_periods': -1},]
-
-    for process_dict in processing_list1:
-        df = filtering_df(df, process_dict)
-
-    df = df.loc[~df['Column3'].str.contains('Solde au', na=False)]
-    df = df.loc[~df['Column3'].str.contains('Intérêt créditeur', na=False)]
-
-    for process_dict in processing_list2:
-        df = filtering_df(df, process_dict)
-
-    mask12 = (df.loc[:, ['Column3', 'Column4', 'Column5']].notna().all(axis=1)) & (df['Column5'].astype(str).str.count(r'\.') == 2)
-    df.loc[mask12, 'Column3'] = df.loc[mask12, 'Column3'] + ' ' + df.loc[mask12, 'Column4']
-    df.loc[mask12, basic_shifted_col] = df.loc[mask12, basic_shifted_col].shift(periods=-1, axis=1)
-    return df
+            if val.strip():
+                cleaned_list.append(val)
+                prev_blank = False
+            elif not prev_blank:
+                cleaned_list.append(val)
+                prev_blank = True
+    return cleaned_list
 
 
 def extract_datetime(text):
@@ -86,25 +62,31 @@ def extract_datetime(text):
     return match.group(0) if match else None
 
 
-def cleaning_data(df):
-    df = df[(df['Column4'].astype(str).str.count(r'\.') == 2) & (df['Column4'].str.len()==8)]
+def clean_dataframe(df):
+    cleaned_rows = []
+    for element in df.values.tolist():
+        cleaned_rows.append(clean_list(element))
+    df_cleaned = pd.DataFrame(cleaned_rows)
+    df_cleaned = df_cleaned.iloc[:, :5]
 
-    df = df.drop(columns=['Column8', 'Column9', 'Column10', 'Column11', 'Column12'])
-    df.columns = ['description', 'date', 'out', 'in', 'balance']
+    df_cleaned.columns = ['description', 'date', 'out', 'in', 'balance']
+    df_cleaned = df_cleaned.loc[~df_cleaned[['date', 'out', 'in', 'balance']].isna().all(axis=1)]
+    df_cleaned['date'] = pd.to_datetime(df_cleaned['date'], format='%d.%m.%y')
+    df_cleaned[['out', 'in', 'balance']] = df_cleaned[['out', 'in', 'balance']].replace('', np.nan)
+    df_cleaned[['out', 'in', 'balance']] = df_cleaned[['out', 'in', 'balance']].fillna(0).astype(str).replace("'", "", regex=True).astype(float)
+    df_cleaned['out'] = -df_cleaned['out']
 
-    df['date'] = pd.to_datetime(df['date'], format='%d.%m.%y')
-    df[['out', 'in', 'balance']] = df[['out', 'in', 'balance']].fillna(0).astype(str).replace("'", "", regex=True).astype(float)
-    df['out'] = -df['out']
-
-    temp_date = df['description'].apply(extract_datetime)
+    temp_date = df_cleaned['description'].apply(extract_datetime)
     temp_date = pd.to_datetime(temp_date, format='%d.%m.%Y %H:%M')
-    df['date'] = temp_date.fillna(df['date'])
+    df_cleaned['date'] = temp_date.fillna(df_cleaned['date'])
 
-    df['description'] = df['description'].str.lstrip()
+    df_cleaned['description'] = df_cleaned['description'].str.lstrip()
 
-    df[['accounting_date', 'description']] = df['description'].str.split(' ', n=1, expand=True)
-    df['accounting_date'] = pd.to_datetime(df['accounting_date'], format='%d.%m.%y')
-    return df
+    df_cleaned[['accounting_date', 'description']] = df_cleaned['description'].str.split(' ', n=1, expand=True)
+    df_cleaned['accounting_date'] = pd.to_datetime(df_cleaned['accounting_date'], format='%d.%m.%y')
+    return df_cleaned
+
+
 
 
 
@@ -112,13 +94,9 @@ def cleaning_data(df):
 def clean_cash_flows(df):
     ''' Clean the text to get the proper french accents (equivalent to UTF-8 decode result) '''
 
-    replacements = [("Ã©", "é"),("Ã¨", "è"),("Ã ", "à"),("Ã§", "ç"),("Ãª", "ê"),("Ã¯", "ï"),("Ã´", "ô"),("Ã¼", "ü"),("Ãœ", "Ü"),("Ã†", "Æ"),("Ã“", "Ó"),("Ã", "à"),("Œ", "œ"),("Â", ""),("\n","")]
+    replacements = [("Ã©", "é"),("Ã¨", "è"),("Ã ", "à"),("Ã§", "ç"),("Ãª", "ê"),("Ã¯", "ï"),("Ã´", "ô"),("Ã¼", "ü"),("Ãœ", "Ü"),("Ã†", "Æ"),("Ã“", "Ó"),("Ã", "à"),("Œ", "œ"),("Â", ""),("\n",""),("Â°","o")]
     for old, new in replacements:
         df['description'] = df['description'].str.replace(old, new, regex=False)
-    # df['description'] = df['description'].str.replace('Numéro de carte: 535445******4464', '', regex=False)
-    # df['description'] = df['description'].str.replace('N° cartexxxxxxxxxxxx4464 - ', '', regex=False)
-    # df['description'] = df['description'].str.replace('N° carte xxxxxxxxxxxx4464 - ', '', regex=False)
-    # df['description'] = df['description'].str.replace('N° carte   xxxxxxxxxxxx4464 - ', '', regex=False)
     return df
 
 
@@ -146,10 +124,18 @@ def cash_flow_prep(df):
     cash_flows.loc[:, 'platform'] = 'BCGE'
     cash_flows['currency'] = 'CHF'
 
-    cash_flows.loc[cash_flows['amount'] > 0, 'type'] = 'Deposit'
-    cash_flows.loc[(cash_flows['amount'] < 0) & (cash_flows['description'].str.contains('Achat')), 'type'] = 'Expense'
-    cash_flows.loc[(cash_flows['amount'] < 0) & (~cash_flows['description'].str.contains('Achat')), 'type'] = 'Withdrawal'
-    cash_flows = cash_flows.loc[:, ('date', 'type', 'amount', 'platform', 'currency', 'description')]
+    cash_flows.loc[cash_flows['amount'] >= 0, 'type'] = 'Inflow'
+    cash_flows.loc[cash_flows['amount'] < 0, 'type'] = 'Outflow'
+
+    cash_flows.loc[cash_flows['description'].str.contains('Constantin Bosc') | cash_flows['description'].str.contains('Constantin Jean-Pierre Francois'), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[cash_flows['description'].str.contains('Ordre permanent') | cash_flows['description'].str.contains('Avenue de France 90'), 'subtype'] = 'Fixed'
+    cash_flows.loc[cash_flows['description'].str.contains('EM Exchange Market') | cash_flows['description'].str.contains('WIR Bank Auberg 1') |
+                   cash_flows['description'].str.contains('Revolut Bank UAB'), ('type', 'subtype')] = ['Transfer', 'Variable']
+
+    cash_flows.loc[(cash_flows['type']=='Outflow') & ((cash_flows['description'].str.contains('Sanitas')) | (cash_flows['description'].str.contains('Helsana'))), 'subtype'] = 'Fixed'
+    cash_flows.loc[(cash_flows['type']=='Inflow') & ((cash_flows['description'].str.contains(' Ernst & Young AG')) | (cash_flows['description'].str.contains(' Ernst . Young AG')) | (cash_flows['description'].str.contains('CH580024024087252802T'))), 'subtype'] = 'Fixed'
+    cash_flows.loc[cash_flows['subtype'] != cash_flows['subtype'], 'subtype'] = 'Variable'
+    cash_flows = cash_flows.loc[:, ('date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description')]
     cash_flows['asset_class'] = 'Cash'
     cash_flows = clean_cash_flows(cash_flows)
     return cash_flows
@@ -159,11 +145,9 @@ def cash_flow_prep(df):
 
 
 
-
 def main():
     df = loading_and_preclean_data()
-    df = process_dataframe(df)
-    df = cleaning_data(df)
+    df = clean_dataframe(df)
     test_bcge_data_extract(df)
 
     cash_flows = collection_config(dataframe=cash_flow_prep(df), collection_name='collection_cash_flows')
@@ -171,4 +155,8 @@ def main():
     return dfs_list
 
 
-z = main()
+
+
+
+if __name__ == '__main__':
+    test = main()

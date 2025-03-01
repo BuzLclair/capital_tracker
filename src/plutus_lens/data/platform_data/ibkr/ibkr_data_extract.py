@@ -26,11 +26,11 @@ def cash_flow_prep(path):
     data = data.loc[data['Currency'] != 'Total']
     data['Settle Date'] = pd.to_datetime(data['Settle Date'])
     data['platform'] = 'Interactive Brokers'
-    data.loc[data['Amount']>=0, 'type'] = 'Deposits'
-    data.loc[data['Amount']<0, 'type'] = 'Withdrawal'
+    data['type'] = 'Transfer'
+    data['subtype'] = 'Variable'
     data['asset_class'] = 'Cash'
     data.rename(columns={'Currency':'currency', 'Settle Date': 'date', 'Description': 'description', 'Amount': 'amount'}, inplace=True)
-    return data[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
+    return data[['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description', 'asset_class']]
 
 
 
@@ -89,7 +89,8 @@ def fx_balancing(secu_ledger):
     fx_leg2 = fx_leg2[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
 
     fx_transactions = pd.concat([fx_leg1, fx_leg2], ignore_index=True)
-    fx_transactions['type'] = 'fx change'
+    fx_transactions['type'] = 'Transfer'
+    fx_transactions['subtype'] = 'Variable'
     return fx_transactions
 
 
@@ -108,10 +109,10 @@ def cash_balancing(secu_ledger):
     cash_rebalance['amount'] = (1*(cash_rebalance['type']=='buy') - 1*(cash_rebalance['type']=='sell')) * cash_rebalance['Proceeds'] + cash_rebalance['fees']
     cash_rebalance['asset_class'] = 'Cash'
     cash_rebalance.rename(columns={'quote_currency':'currency'}, inplace=True)
-    cash_rebalance.loc[cash_rebalance['type']=='buy', 'type'] = 'buy stock'
-    cash_rebalance.loc[cash_rebalance['type']=='sell', 'type'] = 'sell stock'
+    cash_rebalance['type'] = 'Transfer'
     cash_rebalance['description'] = cash_rebalance['type'] + ' ' + cash_rebalance['units'].astype(str) + ' units of ' + cash_rebalance['ticker']
-    return cash_rebalance[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
+    cash_rebalance['subtype'] = 'Variable'
+    return cash_rebalance[['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description', 'asset_class']]
 
 
 
@@ -123,10 +124,11 @@ def dividends_prep(path):
     dividends.rename(columns={'Date':'date', 'Amount':'amount', 'Currency':'currency', 'Description':'description'}, inplace=True)
 
     dividends['date'] = pd.to_datetime(dividends['date'])
-    dividends['type'] = 'dividend'
+    dividends['type'] = 'Inflow'
+    dividends['subtype'] = 'Variable'
     dividends['platform'] = 'Interactive Brokers'
     dividends['asset_class'] = 'Cash'
-    return dividends[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
+    return dividends[['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description', 'asset_class']]
 
 
 

@@ -55,6 +55,9 @@ class EtoroData:
         cash_flows.loc[:, 'platform'] = 'Etoro'
         cash_flows.loc[:, 'currency'] = cash_flows_rows.loc[:,'Details'].str.split(' ').str[1]
         cash_flows['asset_class'] = 'Cash'
+        cash_flows['type'] = 'Transfer'
+        cash_flows['subtype'] = 'Variable'
+        cash_flows['description'] = 'Cash deposit'
         return cash_flows
 
 
@@ -129,10 +132,10 @@ class EtoroData:
         cash_rebalance['asset_class'] = 'Cash'
         cash_rebalance.rename(columns={'Amount':'amount'}, inplace=True)
         cash_rebalance.loc[cash_rebalance['type']=='buy', 'amount'] *= -1
-        cash_rebalance.loc[cash_rebalance['type']=='buy', 'type'] = 'buy stock'
-        cash_rebalance.loc[cash_rebalance['type']=='sell', 'type'] = 'sell stock'
         cash_rebalance['description'] = cash_rebalance['type'] + ' ' + cash_rebalance['units'].astype(str) + ' units of ' + cash_rebalance['ticker']
-        cash_rebalance = cash_rebalance[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
+        cash_rebalance['type'] = 'Transfer'
+        cash_rebalance['subtype'] = 'Variable'
+        cash_rebalance = cash_rebalance[['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description', 'asset_class']]
         return cash_rebalance
 
 
@@ -149,10 +152,11 @@ class EtoroData:
 
         dividends['description'] = dividends['ticker'] + ' Cash Dividend ' + dividends['currency'] + ' ' + dividends['amount'].astype(str)
 
-        dividends['type'] = 'dividend'
+        dividends['type'] = 'Inflow'
+        dividends['subtype'] = 'Variable'
         dividends['platform'] = 'Etoro'
         dividends['asset_class'] = 'Cash'
-        return dividends[['date', 'type', 'amount', 'platform', 'currency', 'description', 'asset_class']]
+        return dividends[['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description', 'asset_class']]
 
 
     @staticmethod

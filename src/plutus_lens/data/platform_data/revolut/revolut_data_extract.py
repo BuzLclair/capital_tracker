@@ -66,14 +66,20 @@ def cash_flow_prep(path_current_account, path_previous_account):
     cash_flows.loc[:, 'platform'] = 'Revolut'
 
     in_out_mask = (cash_flows['Type'].isin(['EXCHANGE', 'TOPUP', 'TRANSFER'])) | ((cash_flows['Type'] == 'REFUND') & (cash_flows['Description'].str.contains('Transfer', na=False)))
-    cash_flows.loc[in_out_mask & (cash_flows['Amount'] < 0), 'type'] = 'Withdrawal'
-    cash_flows.loc[in_out_mask & (cash_flows['Amount'] >= 0), 'type'] = 'Deposit'
-    cash_flows.loc[~in_out_mask, 'type'] = 'Expense'
+    cash_flows.loc[in_out_mask & (cash_flows['Description'].str.replace('From ', '').str.upper() == cash_flows['Description'].str.replace('From ', '')), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[in_out_mask & (cash_flows['Description'].str.replace('To ', '').str.upper() == cash_flows['Description'].str.replace('To ', '')), ('type', 'subtype')] = ['Outflow', 'Variable']
+    cash_flows.loc[in_out_mask & (cash_flows['Description'].str.replace('From ', '').str.upper() != cash_flows['Description'].str.replace('From ', '')), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[in_out_mask & (cash_flows['Description'].str.replace('To ', '').str.upper() != cash_flows['Description'].str.replace('To ', '')), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[cash_flows['Description'].str.contains('Top-Up'), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[(cash_flows['Description'].str.contains('Exchanged to') | cash_flows['Description'].str.contains('Exchanged from')), ('type', 'subtype')] = ['Transfer', 'Variable']
+    cash_flows.loc[cash_flows['type'] != cash_flows['type'], 'type'] = 'Outflow'
+    cash_flows.loc[cash_flows['subtype'] != cash_flows['subtype'], 'subtype'] = 'Variable'
 
-    cash_flows = cash_flows.loc[:, ('Completed Date', 'type', 'Amount', 'platform', 'Currency', 'Description')]
-    cash_flows.columns = ['date', 'type', 'amount', 'platform', 'currency', 'description']
+    cash_flows = cash_flows.loc[:, ('Completed Date', 'type', 'subtype', 'Amount', 'platform', 'Currency', 'Description')]
+    cash_flows.columns = ['date', 'type', 'subtype', 'amount', 'platform', 'currency', 'description']
     cash_flows['asset_class'] = 'Cash'
     return cash_flows
+
 
 
 
