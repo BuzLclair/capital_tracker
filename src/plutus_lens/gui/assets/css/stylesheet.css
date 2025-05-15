@@ -1,0 +1,589 @@
+/* =====================================================
+   Accounts - Global
+   -----------------------------------------------------
+
+   ===================================================== */
+
+.main-page.accounts{
+    position: absolute;
+    width: 83vw;
+    height: 90vh;
+    top: 5vh;
+    left: 17vw;
+    padding-top: 5vh;
+    padding-left: 0vw;
+    }
+
+
+.accounts-tabs{
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 4.5vh;
+    gap: 1.5vw;
+}
+
+
+.accounts-box{
+    position: relative;
+    height: 100%;
+    width: 11vw !important;
+    transition: all 0.3s ease-in-out;
+    font-family: 'Helvetica';
+    font-size: 1vw;
+    color: rgba(58, 66, 75, .55);
+    letter-spacing: 0.09vw;
+    font-weight: 400;
+    background-color: transparent !important;
+    border: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    padding: 0 !important;
+    padding-top: .25vh !important;
+    }
+
+.accounts-box:hover{
+    box-shadow: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    }
+
+.accounts-box--selected{
+    box-shadow: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    color: rgba(0, 0, 0, 1) !important;
+    }
+.accounts-box--selected::after{
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    width: 50%;
+    height: 3.5px;
+    background-color: rgba(34, 65, 125, 1) !important;
+    border-radius: 50rem;
+    }
+
+
+/* =====================================================
+   Accounts - Transactions
+   -----------------------------------------------------
+
+   ===================================================== */
+
+.main-page.accounts.transactions{
+    position: absolute;
+    width: 83vw;
+    height: 82vh;
+    top: 12.5vh;
+    left: 0vw;
+    padding-top: 0vh;
+    padding-left: 0vw;
+    }
+
+.accounts_transactions_filters{
+    position: relative;
+    top: 0vh;
+    left: 0vh;
+    height: 5vh;
+    width: 75%;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    font-family: 'Helvetica';
+    font-size: 0.75vw;
+    color: rgba(58, 66, 75, .55);
+    }
+
+.Select-input{
+    height: 4vh;
+    width: 8vw;
+}
+.Select-control{
+    height: 27px;
+}
+.Select-placeholder{
+    line-height: 25px;
+}
+
+
+
+#accounts_transactions_table_id {
+    height: 95%;
+}
+
+.accounts_transactions_table .dash-spreadsheet-container table {
+    border-spacing: 0px !important;
+    border-width: 0px !important;
+}
+
+.accounts_transactions_table{
+    position: absolute;
+    top: 6.5vh;
+    left: 0;
+    width: 75%;
+    height: 92.5%;
+}
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+    font-family: 'Helvetica' !important;
+    font-size: 0.95vw !important;
+    border-collapse: separate !important;
+}
+
+.accounts_transactions_table .dash-spreadsheet-container {
+    border-spacing: 0px !important;
+    table-layout: fixed !important;
+    overflow-y: auto !important;
+    max-height: 100% !important;
+    width: 100% !important;
+}
+.accounts_transactions_table .dash-header,
+.accounts_transactions_table .dash-cell {
+    border-left: none !important;
+    border-right: none !important;
+}
+.accounts_transactions_table .dash-header {
+    font-size: 1vw !important;
+    font-weight: 550 !important;
+    color: rgba(58,66,75,1) !important;
+    text-align: left !important;
+    border: none !important;
+    border-bottom: 2px solid rgba(34,65,125,1) !important;
+    height: 4vh !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    min-width: 7vw !important;
+    max-width: 26vw !important;
+    padding-left: 0.5% !important;
+    padding-right: 0.5% !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    background-color: rgba(255,255,255,0.75) !important;
+}
+
+
+.accounts_transactions_table .dash-cell {
+    background-color: rgba(140, 148, 161, 0.3) !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    min-width: 7vw !important;
+    max-width: 26vw !important;
+    padding-left: 0.5% !important;
+    padding-right: 0.5% !important;
+    padding-top: 1% !important;
+    padding-bottom: 1% !important;
+    color: rgba(86, 95, 106, 1) !important;
+    border-width: 0px !important;
+    border-bottom: 1px solid rgba(86, 95, 106, 0.25) !important;
+}
+
+.accounts_transactions_table .dash-header:nth-of-type(4),
+.accounts_transactions_table .dash-cell:nth-of-type(4) {
+    text-align: center !important;
+}
+.accounts_transactions_table .dash-header:nth-of-type(5),
+.accounts_transactions_table .dash-cell:nth-of-type(5) {
+    text-align: right !important;
+    padding-right: 2.5% !important;
+}
+
+
+.dash-table-container .previous-next-container .page-number {
+    font-family: 'Helvetica' !important;
+    font-size: 0.75vw !important;
+}
+
+.dash-table-container .previous-next-container {
+    text-align: right;
+    background-color: rgba(140,148,161,0.3);
+    border-top: 1px solid rgba(34, 65, 125, 1);
+    height: 2.5vh;
+    padding: 0px 0px !important;
+}
+
+.dash-table-container .previous-next-container .page-number .current-page-container input.current-page {
+    width: 50% !important;
+    height: 75% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.dash-table-container .previous-next-container button.previous-page, .dash-table-container .previous-next-container button.next-page, .dash-table-container .previous-next-container button.first-page, .dash-table-container .previous-next-container button.last-page {
+    transition-duration: 400ms;
+    height: 2vh !important;
+    width: 1.5vw !important;
+    color: rgba(86, 95, 106, 1);
+    background: none;
+}
+
+.dash-table-container .previous-next-container .page-number .current-page-container input.current-page {
+    font-family: 'Helvetica' !important;
+    font-size: 0.75vw !important;
+    border-bottom: 0px !important;
+    background-color: rgba(58, 66, 75, 0.3);
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.current-page-shadow {
+    display: none !important;
+}
+
+
+
+/* =====================================================
+   Accounts - Snapshot
+   -----------------------------------------------------
+
+   ===================================================== */
+
+.snapshot-page {
+    position: absolute;
+    width: calc(100vw - 15vw - 2vw);
+    height: calc(100vh - 10vh - 5.5vh);
+    top: 10vh;
+    left: 0vw;
+    padding-top: 0.5vh;
+    padding-left: 0vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2%;
+}
+
+.financial_snapshot_flows_section {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 70%;
+    height: 100%;
+    gap: 2%;
+}
+
+
+
+
+/* =====================================================
+   Accounts - Snapshot - Net cashflows
+   ===================================================== */
+
+.net_cashflows{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 35%;
+    width: 100%;
+    }
+
+
+.financial_snapshot_flows_details {
+    display: flex;
+    flex-flow: row;
+    flex-direction: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 65%;
+    gap: 2%;
+    top: 15vh;
+}
+
+
+
+/* =====================================================
+   Accounts - Snapshot - Income
+   ===================================================== */
+
+.income_profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 19vh;
+    width: 50%;
+    height: 100%
+}
+
+
+
+/* =====================================================
+   Accounts - Snapshot - Expenses
+   ===================================================== */
+
+.expense_breakdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 19vh;
+    width: 50%;
+    height: 99.7%;
+}
+
+
+.content-expense_breakdown_big_4-first, .content-expense_breakdown_big_4-second {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    height: 50%;
+}
+
+.content-expense_breakdown_big_4-1, .content-expense_breakdown_big_4-2, .content-expense_breakdown_big_4-3, .content-expense_breakdown_big_4-4 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-expense_breakdown_big_4-1 {
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+.content-expense_breakdown_big_4-4 {
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+}
+
+.content-expense_breakdown_prev_month {
+    position: relative;
+    height: 30%;
+    width: 40%;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+
+
+
+/* =====================================================
+   Accounts - Snapshot - Cash overview
+   ===================================================== */
+
+.cash_overview {
+    width: 30%;
+    height: 92.96%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.content-cash_overview {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+
+.content-cash_overview-aggregated-section {
+    background-color: rgba(58, 66, 75, 0.4);
+    border-radius: 10px 10px 0 0;
+    height: 29%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content-cash_overview-aggregated-section-block1 {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 65%;
+    gap: 5%;
+    padding-top: 1.25vh;
+}
+
+.content-cash_overview-aggregated-section-block1-subsection1 {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5%;
+    height: 100%;
+    width: 50%;
+}
+.content-cash_overview-aggregated-section-block1-subsection1-title {
+    font-family: 'Roboto';
+    font-size: 1.26vw;
+    color: rgba(50, 100, 180, 1);
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    text-align: left;
+    padding-left: 1vw;
+    padding-top: 3.5vh;
+}
+.content-cash_overview-aggregated-section-block1-subsection1-amount {
+    font-family: 'Roboto';
+    font-size: 2.7vw;
+    color: rgba(58, 66, 75, 1);
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    padding-left: 0vw;
+    width: 100%;
+    text-align: right;
+}
+
+
+.content-cash_overview-aggregated-section-block1-subsection2 {
+    position: relative;
+    height: 77%;
+    width: 50%;
+    padding-top: 3.5vh;
+    display: flex;
+    align-items: center;
+}
+.cash_overview-aggregated-section-chart{
+    height: 85%;
+    width: 100%;
+    }
+
+.content-cash_overview-aggregated-section-block2 {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    height: 30%;
+    gap: 0%;
+}
+
+.content-cash_overview-aggregated-section-block2-total_wealth {
+    font-family: var(--font-family-base);
+    font-size: 0.9vw;
+    color: rgba(58, 66, 75, .85);
+    letter-spacing: ;
+    font-weight: normal;
+    text-align: center;
+    width: 50%;
+    font-style: italic;
+    padding-left: 1vw;
+}
+.content-cash_overview-aggregated-section-block2-period_change {
+    font-family: var(--font-family-base);
+    font-size: 0.9vw;
+    color: rgba(58, 66, 75, .85);
+    letter-spacing: ;
+    font-weight: normal;
+    text-align: center;
+    width: 50%;
+    font-style: italic;
+}
+
+
+
+
+
+
+
+
+.content-cash_overview-split-section {
+    background-color: rgba(179, 186, 197, 0.3) !important;
+    height: 71%;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0%;
+    overflow-y: auto;
+    padding-top: 2%;
+    box-sizing: border-box;
+}
+
+.cash-section-credit-card {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    height: auto;
+    width: 90%;
+    background-position: center;
+    aspect-ratio: 3017 / 2041;
+    object-fit: cover;
+    background-size: contain;
+    background-color: transparent;
+    box-sizing: border-box;
+    filter: drop-shadow(2vw 2vw 4vw rgba(0, 0, 0, 0.25));
+
+    padding-top: 3vh;
+    padding-left: 1.9vw;
+}
+
+.cash-section-main-title {
+    font-family: 'Roboto';
+    font-size: 1.30vw;
+    letter-spacing: 0.16vw;
+    font-weight: 550;
+    text-align: left;
+}
+
+.cash-section-main-cash-section {
+    padding-top: 6vh;
+    display: flex;
+    flex-flow: row;
+    height: 10%;
+    width: 100%;
+}
+
+
+.cash-section-main-cash-block1 {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    width: 50%;
+    height: 100%;
+    padding-top: 0vh;
+}
+.cash-section-main-cash-title {
+    font-family: 'Roboto';
+    font-size: 1.00vw;
+    color: rgba(58, 66, 75, 1);
+    letter-spacing: 0.10vw;
+    font-weight: 500;
+    text-align: left;
+}
+.cash-section-main-cash-amount {
+    font-family: 'Roboto';
+    font-size: 2.00vw;
+    color: rgba(34, 65, 125, 1);
+    letter-spacing: 0.2vw;
+    font-weight: 700;
+    text-align: center;
+}
+.cash-section-main-cash-change {
+    padding-top: 1.5vw;
+    font-family: var(--font-family-base);
+    font-size: 0.85vw;
+    color: rgba(58, 66, 75, .85);
+    font-weight: normal;
+    text-align: left;
+    width: 30%;
+    font-style: italic;
+    padding-left: 0vw;
+    padding-right: 4.0vw;
+}
